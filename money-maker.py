@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 import quandl
 
+quandl_api_key = '1fvGunr_VZuoZCNgnQkg'
+
 #Daily data from Quandl
 quandl_dict = {
 	#futures
@@ -23,6 +25,17 @@ quandl_dict = {
 	'USDNOK': "FED/RXI_N_B_NO", #NORWAY -- SPOT EXCHANGE RATE, KRONER/US$, Business day
 	'USDCNY': "FED/RXI_N_B_CH", #CHINA -- SPOT EXCHANGE RATE, YUAN/US$ P.R., Business day
 	'USDINR': "FED/RXI_N_B_IN", #INDIA -- SPOT EXCHANGE RATE, RUPEES/US$, Business day
+	'USDVEB': 'FED/RXI_N_B_VE',	#SPOT EXCHANGE RATE - VENEZUELA, Business day
+	'USDTWD': 'FED/RXI_N_B_TA', #TAIWAN -- SPOT EXCHANGE RATE, NT$/US$, Business day
+	'USDTHB': 'FED/RXI_N_B_TH', #THAILAND -- SPOT EXCHANGE RATE, BAHT/US$, Business day
+	'USDSLR': 'FED/RXI_N_B_SL', #SRI LANKA -- SPOT EXCHANGE RATE, RUPEES/US$, Business day
+	'USDKRW': 'FED/RXI_N_B_KO', #KOREA -- SPOT EXCHANGE RATE, WON/US$, Business day
+	'USDSEK': 'FED/RXI_N_B_SD', #SWEDEN -- SPOT EXCHANGE RATE, KRONOR/US$, Business day
+	'USDNOK': 'FED/RXI_N_B_NO', #NORWAY -- SPOT EXCHANGE RATE, KRONER/US$, Business day
+	'USDSGD': 'FED/RXI_N_B_SI', #SINGAPORE -- SPOT EXCHANGE RATE, SINGAPORE $/US$, Business day
+	'USDHKD': 'FED/RXI_N_B_HK', #HONG KONG -- SPOT EXCHANGE RATE, HK$/US$, Business day
+	'USDMXP': 'FED/RXI_N_B_MX',	#MEXICO -- SPOT EXCHANGE RATE, PESOS/US$, Business day
+	'USDMYR':'FED/RXI_N_B_MA',	#MALAYSIA -- SPOT EXCHANGE RATE, RINGGIT/US$, Business day
 	'DTWEXM': "FRED/DTWEXM", #Trade Weighted U.S. Dollar Index: Major Currencies
 	'DTWEXB': "FRED/DTWEXB", #Trade Weighted U.S. Dollar Index: Broad
 	#Interest rates
