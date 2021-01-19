@@ -1,8 +1,10 @@
 # based on https://towardsdatascience.com/forecasting-s-p-500-stock-index-using-classification-models-eb41510a896d
 
+import datetime as dt
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import pandas_datareader as web
 import quandl
 
 quandl_api_key = '1fvGunr_VZuoZCNgnQkg'
@@ -52,21 +54,6 @@ quandl_dict = {
 	'T5YIFR': "FRED/T5YIFR",#5-Year, 5-Year Forward Inflation Expectation Rate 
 	'TEDRATE': "FRED/TEDRATE", #TED Spread
 	'DPRIME': "FRED/DPRIME" #Bank Prime Loan Rate
-}
-
-#Local files (Source: yahoo finance)
-local_files = {
-	'VIX':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/VIX.csv", #Vix index
-	#Sector ETFs:
-	'XLE':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLE.csv", #Energy Select Sector SPDR Fund 
-	'XLF':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLF.csv", #Financial Select Sector SPDR Fund
-	'XLU':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLU.csv", #Utilities Select Sector SPDR Fund
-	'XLI':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLI.csv", #Industrial Select Sector SPDR Fund
-	'XLK':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLK.csv", #Technology Select Sector SPDR Fund
-	'XLV':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLV.csv", #Health Care Select Sector SPDR Fund
-	'XLY':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLY.csv", #Consumer Discretionary Select Sector SPDR Fund
-	'XLP':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLP.csv", #Consumer Staples Select Sector SPDR Fund
-	'XLB':"https://raw.githubusercontent.com/YizhouTang/SP500_Classfication_Models/master/data/XLB.csv", #Materials Select Sector SPDR Fund
 }
 
 #econ features that are not daily (weekly, monthly & quarterly data - need to ffill)
@@ -122,4 +109,8 @@ sparse_econ_data = {
 	'S&P 500 PE Ratio by Month':"MULTPL/SP500_PE_RATIO_MONTH",#Price to earnings ratio, based on trailing twelve month as reported earnings. Current PE is estimated from latest reported earnings and current market price. Source: Robert Shiller and his book Irrational Exuberance for historic S&P 500 PE Ratio.
 }
 
+trust_funds = ['VIX','XLE','XLU','XLI','XLK','XLV','XLY','XLP','XLB','SPY']
 
+for i in trust_funds:
+	df = web.DataReader(i, 'yahoo', '1993-1-29', dt.datetime.now())
+	print(df.head())
