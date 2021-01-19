@@ -8,12 +8,15 @@ import quandl
 quandl_api_key = '1fvGunr_VZuoZCNgnQkg'
 
 #Daily data from Quandl
+# arbitrarily added data from same databases
 quandl_dict = {
 	#futures
-	'gold' :"CHRIS/CME_GC1.4", #Gold Futures, Continuous Contract #1 (GC1) (Front Month)
+	'gold': "CHRIS/CME_GC1.4", #Gold Futures, Continuous Contract #1 (GC1) (Front Month)
 	'eurodollar': "CHRIS/CME_ED1.4", #Eurodollar Futures, Continuous Contract #1 (ED1) (Front Month)
 	'silver': "CHRIS/CME_SI1.4", #Silver Futures, Continuous Contract #1 (SI1) (Front Month)
 	'DCOILWTICO': "FRED/DCOILWTICO.4", #Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma
+	'MplsHRWI': ' CHRIS/MGEX_MW5', # Minneapolis Hard Red Spring Wheat Futures, Continuous Contract #5 (MW5)
+	'BAB90D': ' CHRIS/ASX_IR1', # 90 Day Bank Accepted Bills Futures, Continuous Contract #1 (IR1) (Front Month)
 	#major currency pair spot rates
 	'USDCAD': "FED/RXI_N_B_CA", #CANADA -- SPOT EXCHANGE RATE, CANADIAN $/US$, Business day
 	'EURUSD': "FED/RXI_US_N_B_EU", #SPOT EXCHANGE RATE - EURO AREA, Business day
@@ -25,19 +28,19 @@ quandl_dict = {
 	'USDNOK': "FED/RXI_N_B_NO", #NORWAY -- SPOT EXCHANGE RATE, KRONER/US$, Business day
 	'USDCNY': "FED/RXI_N_B_CH", #CHINA -- SPOT EXCHANGE RATE, YUAN/US$ P.R., Business day
 	'USDINR': "FED/RXI_N_B_IN", #INDIA -- SPOT EXCHANGE RATE, RUPEES/US$, Business day
-	'USDVEB': 'FED/RXI_N_B_VE',	#SPOT EXCHANGE RATE - VENEZUELA, Business day
-	'USDTWD': 'FED/RXI_N_B_TA', #TAIWAN -- SPOT EXCHANGE RATE, NT$/US$, Business day
-	'USDTHB': 'FED/RXI_N_B_TH', #THAILAND -- SPOT EXCHANGE RATE, BAHT/US$, Business day
-	'USDSLR': 'FED/RXI_N_B_SL', #SRI LANKA -- SPOT EXCHANGE RATE, RUPEES/US$, Business day
-	'USDKRW': 'FED/RXI_N_B_KO', #KOREA -- SPOT EXCHANGE RATE, WON/US$, Business day
-	'USDSEK': 'FED/RXI_N_B_SD', #SWEDEN -- SPOT EXCHANGE RATE, KRONOR/US$, Business day
-	'USDNOK': 'FED/RXI_N_B_NO', #NORWAY -- SPOT EXCHANGE RATE, KRONER/US$, Business day
-	'USDSGD': 'FED/RXI_N_B_SI', #SINGAPORE -- SPOT EXCHANGE RATE, SINGAPORE $/US$, Business day
-	'USDHKD': 'FED/RXI_N_B_HK', #HONG KONG -- SPOT EXCHANGE RATE, HK$/US$, Business day
-	'USDMXP': 'FED/RXI_N_B_MX',	#MEXICO -- SPOT EXCHANGE RATE, PESOS/US$, Business day
-	'USDMYR':'FED/RXI_N_B_MA',	#MALAYSIA -- SPOT EXCHANGE RATE, RINGGIT/US$, Business day
-	'DTWEXM': "FRED/DTWEXM", #Trade Weighted U.S. Dollar Index: Major Currencies
-	'DTWEXB': "FRED/DTWEXB", #Trade Weighted U.S. Dollar Index: Broad
+	'USDVEB': 'FED/RXI_N_B_VE',	# SPOT EXCHANGE RATE - VENEZUELA, Business day
+	'USDTWD': 'FED/RXI_N_B_TA', # TAIWAN -- SPOT EXCHANGE RATE, NT$/US$, Business day
+	'USDTHB': 'FED/RXI_N_B_TH', # THAILAND -- SPOT EXCHANGE RATE, BAHT/US$, Business day
+	'USDSLR': 'FED/RXI_N_B_SL', # SRI LANKA -- SPOT EXCHANGE RATE, RUPEES/US$, Business day
+	'USDKRW': 'FED/RXI_N_B_KO', # KOREA -- SPOT EXCHANGE RATE, WON/US$, Business day
+	'USDSEK': 'FED/RXI_N_B_SD', # SWEDEN -- SPOT EXCHANGE RATE, KRONOR/US$, Business day
+	'USDNOK': 'FED/RXI_N_B_NO', # NORWAY -- SPOT EXCHANGE RATE, KRONER/US$, Business day
+	'USDSGD': 'FED/RXI_N_B_SI', # SINGAPORE -- SPOT EXCHANGE RATE, SINGAPORE $/US$, Business day
+	'USDHKD': 'FED/RXI_N_B_HK', # HONG KONG -- SPOT EXCHANGE RATE, HK$/US$, Business day
+	'USDMXP': 'FED/RXI_N_B_MX',	# MEXICO -- SPOT EXCHANGE RATE, PESOS/US$, Business day
+	'USDMYR':'FED/RXI_N_B_MA',	# MALAYSIA -- SPOT EXCHANGE RATE, RINGGIT/US$, Business day
+	'DTWEXM': "FRED/DTWEXM", # Trade Weighted U.S. Dollar Index: Major Currencies
+	'DTWEXB': "FRED/DTWEXB", # Trade Weighted U.S. Dollar Index: Broad
 	#Interest rates
 	'DFF': "FRED/DFF", #Effective Federal Funds Rate
 	'DTB3': "FRED/DTB3", #3-Month Treasury Bill: Secondary Market Rate
