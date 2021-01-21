@@ -5,9 +5,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import pandas_datareader as web
+import pickle
 import quandl
 
-quandl_api_key = '1fvGunr_VZuoZCNgnQkg'
+quandl.ApiConfig.api_key = "1fvGunr_VZuoZCNgnQkg"
+start = '2000-01-01'
+end = '2020-04-30'
+
+np.random.seed(seed=1)
 
 #Daily data from Quandl
 # arbitrarily added data from same databases
@@ -111,6 +116,38 @@ sparse_econ_data = {
 
 trust_funds = ['VIX','XLE','XLU','XLI','XLK','XLV','XLY','XLP','XLB','SPY']
 
-for i in trust_funds:
-	df = web.DataReader(i, 'yahoo', '1993-1-29', dt.datetime.now())
-	print(df.head())
+# for i in trust_funds:
+# 	df = web.DataReader(i, 'yahoo', '1993-1-29', dt.datetime.now())
+# 	print(df.head())
+
+# construct target variable
+df = web.DataReader('SPY', 'yahoo', '1993-1-29', dt.datetime.now())
+
+# Visualization
+plt.figure(figsize=(10, 8), dpi=60)
+plt.title("SPY Adjusted Close")
+plt.plot(df['Adj Close'])
+plt.xlabel('Date')
+plt.ylabel('Mid Price')
+# plt.show()
+
+# shift -1 for next day's return
+df['SPY_forward_ret'] = df['Close'].shift(-1)/df['Open'].shift(-1) -1
+
+# If tomorrow's return > 0, then 1
+# If tomorrow's return <= 0, then 0
+df['profit'] = 0
+df.loc[df['SPY_forward_ret'] > 0.0, 'profit'] = 1
+df.to_csv('dataframe.csv')
+
+# remove look ahead bias
+del df['SPY_forward_ret']
+
+# plot y
+plt.figure(figsize=(8,8))
+plt.hist('profit', data=df)
+plt.title('Target Variable Counts')
+plt.show()
+
+
+
