@@ -183,7 +183,6 @@ def get_sparse_econ_data(df, econ_dict, start,end):
 	ret_data = ret_data.ffill()
 
 	df = pd.concat([df,data, ret_data], axis=1)
-
 	return df
 
 # Compute additional derived features
@@ -225,9 +224,21 @@ df = get_trust_funds(df, trust_funds, START, END)
 df = derive_features(df) 
 
 # Import economic data from Quandl
-# Due to low frequency of sparse_econ_data, not included in derived features
+# Due to low frequency of sparse_econ_data, not included when calling derived features
 df = get_sparse_econ_data(df,sparse_econ_data, START, END)
-df.to_csv('data.csv')
+df.to_csv('data_before.csv')
 
+############### Data preprocessing ###############
+df.tz_localize('US/Pacific')
 
+# remove columns that have more nans than the threshold percentage
+def rmissingvaluecol(df,threshold):
+	l = list(df.drop(df.loc[:,list((100*(df.isnull().sum()/len(df.index))>=threshold))].columns, 1).columns.values)
+	print("# Columns having more than %s percent missing values:"%threshold,(df.shape[1] - len(l)))
+	return l
 
+df = df.replace([np.inf, -np.inf], np.nan)
+cols = rmissingvaluecol(df, 1) #H ere threshold is 1% which means we are going to drop columns having more than 1% of missing values
+df = df[cols]
+df.dropna(inplace=True)
+df.to_csv('data_after.csv')
