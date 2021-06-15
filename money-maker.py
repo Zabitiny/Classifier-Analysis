@@ -7,6 +7,8 @@ import pandas as pd
 import pandas_datareader as web
 import pickle
 import quandl
+from sklearn.model_selection import train_test_split,TimeSeriesSplit,GridSearchCV
+from sklearn.preprocessing import StandardScaler
 
 quandl.ApiConfig.api_key = "1fvGunr_VZuoZCNgnQkg"
 START = '2000-01-01'
@@ -231,14 +233,42 @@ df.to_csv('data_before.csv')
 ############### Data preprocessing ###############
 df.tz_localize('US/Pacific')
 
-# remove columns that have more nans than the threshold percentage
+# Get list of columns that have more nans than the threshold percentage
 def rmissingvaluecol(df,threshold):
-	l = list(df.drop(df.loc[:,list((100*(df.isnull().sum()/len(df.index))>=threshold))].columns, 1).columns.values)
-	print("# Columns having more than %s percent missing values:"%threshold,(df.shape[1] - len(l)))
+	l = list(df.drop(df.loc[:,list(((df.isnull().sum()/len(df.index))>=threshold))].columns, 1).columns.values)
+	print("# Columns having more than %s percent missing values:"%threshold,(df.shape[1] - len(l))) # df.shape[1] is col count
 	return l
 
 df = df.replace([np.inf, -np.inf], np.nan)
-cols = rmissingvaluecol(df, 1) #H ere threshold is 1% which means we are going to drop columns having more than 1% of missing values
+cols = rmissingvaluecol(df, .01)
 df = df[cols]
 df.dropna(inplace=True)
 df.to_csv('data_after.csv')
+
+############### Train/Test Split ###############
+
+# Split data set
+X = df.loc[:, df.columns != 'profit']
+y = df.loc[:, df.columns == 'profit']
+
+# Test set uses 20% of the data, no shuffle since we're dealing with time series
+X_train_raw, X_test_raw, y_train, y_test = train_test_split(X, y, test_size=0.20, shuffle=False)
+
+# Summary
+print("Train/Test Split Results:")
+print("X Train Set:")
+print(X_train_raw.shape)
+print("X Test Set:")
+print(X_test_raw.shape)
+
+############### Standardization ###############
+# Initialize and fit scaler
+scaler = StandardScaler()
+# Fit scaler using the training data
+scaler.fit(X_train_raw)
+
+# Transform the raw data
+X_train_standardized = scaler.transform(X_train_raw)
+X_test_standardized = scaler.transform(X_test_raw)
+
+
